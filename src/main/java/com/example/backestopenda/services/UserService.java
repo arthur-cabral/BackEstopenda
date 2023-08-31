@@ -1,49 +1,42 @@
 package com.example.backestopenda.services;
 
 import com.example.backestopenda.models.User;
+import com.example.backestopenda.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
 public class UserService {
     private final Logger logger = Logger.getLogger(UserService.class.getName());
 
-    public ArrayList<User> findAll(){
+    @Autowired
+    UserRepository userRepository;
+
+    public List<User> findAll(){
         logger.info("Finding all users");
-        ArrayList<User> listUser = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            User user = mockUser((long) i);
-            listUser.add(user);
-        }
-        return listUser;
+        return userRepository.findAll();
     }
 
-    public User findById(Long id){
-        logger.info("Finding an user");
-        User user = new User();
-        user.setId(1L);
-        user.setName("Arthur");
-
-        return user;
+    public Optional<User> findById(Long id){
+        logger.info("Finding an user by id");
+        return userRepository.findById(id);
     }
 
-    public User create(User user) {
+    public void create(User user) {
         logger.info("Creating an user");
-//        User user = new User();
-//        return user;
-        return user;
+        userRepository.save(user);
     }
 
-    private User mockUser(Long i) {
-        User user = new User();
-
-        user.setId(i);
-        user.setName("Arthur" + i);
-
-        return user;
-    }
+//    public User update(User user){
+//        logger.info("Updating an user");
+//
+//        Optional<User> existsUser = userRepository.findById(user.getId());
+//
+//        return userRepository.save(user);
+//    }
 
 }
