@@ -1,8 +1,9 @@
 package com.example.backestopenda.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class StudentDto {
+public class StudentDto implements Serializable {
     private Long id;
     private String name;
     private String cpf;

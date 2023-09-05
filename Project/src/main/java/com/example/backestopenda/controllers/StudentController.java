@@ -1,7 +1,6 @@
 package com.example.backestopenda.controllers;
 
 import com.example.backestopenda.dto.StudentDto;
-import com.example.backestopenda.models.Student;
 import com.example.backestopenda.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
