@@ -36,6 +36,6 @@ jobs:
 
     - name: Push Docker Image to Docker Hub
       run: |
-        docker tag ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:latest docker tag ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:${{ github.run_id }}
+        docker tag ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:latest ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:${{ github.run_id }}
         docker push ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:${{ github.run_id }}
         docker push ${{ SECRETS.DOCKER_USERNAME }}/backendestopenda:latest
