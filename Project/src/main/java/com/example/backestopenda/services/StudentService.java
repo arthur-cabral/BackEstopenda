@@ -47,7 +47,7 @@ public class StudentService {
     public StudentDto update(Long id, StudentDto studentDto){
         logger.info("Updating a student");
         Student student = modelMapper.map(studentDto, Student.class);
-        student.setId(id);
+        student.setStudentId(id);
         student = studentRepository.save(student);
 
         return modelMapper.map(student, StudentDto.class);

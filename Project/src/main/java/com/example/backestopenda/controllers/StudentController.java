@@ -44,7 +44,7 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<StudentDto> create(@RequestBody StudentDto dto, UriComponentsBuilder uriBuilder){
         StudentDto studentDto = studentService.create(dto);
-        URI path = uriBuilder.path("/students/{id}").buildAndExpand(studentDto.getId()).toUri();
+        URI path = uriBuilder.path("/student/{id}").buildAndExpand(studentDto.getStudentId()).toUri();
 
         return ResponseEntity.created(path).body(studentDto);
     }

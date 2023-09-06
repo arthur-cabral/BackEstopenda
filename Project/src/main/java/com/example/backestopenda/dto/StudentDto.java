@@ -4,18 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class StudentDto implements Serializable {
-    private Long id;
+    private Long studentId;
     private String name;
     private String cpf;
     private String ra;
     private Date dateCreated;
 
-    public Long getId() {
-        return id;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public String getName() {
