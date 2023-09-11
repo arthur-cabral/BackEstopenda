@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -36,9 +37,14 @@ public class EventService {
 
     public EventDto findById(Long id){
         logger.info("Finding event by id");
-        Event event = eventRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Optional<Event> event = eventRepository.findById(id);
 
         return modelMapper.map(event, EventDto.class);
+    }
+
+    public boolean existsById(Long id){
+        logger.info("Checking if a event exists");
+        return eventRepository.existsById(id);
     }
 
     public Page<EventDto> findAllByStudentId(Long id, Pageable pageable){
@@ -72,7 +78,8 @@ public class EventService {
 
     public void delete(Long id){
         logger.info("Deleting event");
-        Event event = eventRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        eventRepository.delete(event);
+        Optional<Event> event = eventRepository.findById(id);
+
+        event.ifPresent(value -> eventRepository.delete(value));
     }
 }

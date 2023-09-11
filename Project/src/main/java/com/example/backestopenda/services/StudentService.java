@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -31,9 +32,14 @@ public class StudentService {
 
     public StudentDto findById(Long id){
         logger.info("Finding a student by id");
-        Student student = studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Optional<Student> student = studentRepository.findById(id);
 
         return modelMapper.map(student, StudentDto.class);
+    }
+
+    public boolean existsById(Long id){
+        logger.info("Checking if a student exists");
+        return studentRepository.existsById(id);
     }
 
     public StudentDto create(StudentDto studentDto) {
@@ -55,8 +61,9 @@ public class StudentService {
 
     public void delete(Long id){
         logger.info("Deleting a student");
-        Student student = studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        studentRepository.delete(student);
+        Optional<Student> student = studentRepository.findById(id);
+
+        student.ifPresent(value -> studentRepository.delete(value));
     }
 
 }
