@@ -4,7 +4,6 @@ import com.example.backestopenda.dto.StudentDto;
 import com.example.backestopenda.services.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,8 +25,11 @@ import java.net.URI;
 @Tag(name = "Student")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping
     @Operation(summary = "Finds all students")
@@ -59,14 +61,16 @@ public class StudentController {
     @Operation(summary = "Updates an student")
     public ResponseEntity<StudentDto> update(@PathVariable Long id, @RequestBody StudentDto dto){
         StudentDto studentDto = studentService.update(id, dto);
+        if (studentDto == null){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(studentDto);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes an student")
     public ResponseEntity<?> delete(@PathVariable Long id){
-        if (studentService.existsById(id)){
-            studentService.delete(id);
+        if (studentService.delete(id)){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();

@@ -3,7 +3,6 @@ package com.example.backestopenda.services;
 import com.example.backestopenda.dto.StudentDto;
 import com.example.backestopenda.models.Student;
 import com.example.backestopenda.repositories.StudentRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,11 +36,6 @@ public class StudentService {
         return modelMapper.map(student, StudentDto.class);
     }
 
-    public boolean existsById(Long id){
-        logger.info("Checking if a student exists");
-        return studentRepository.existsById(id);
-    }
-
     public StudentDto create(StudentDto studentDto) {
         logger.info("Creating a student");
         Student student = modelMapper.map(studentDto, Student.class);
@@ -52,6 +46,9 @@ public class StudentService {
 
     public StudentDto update(Long id, StudentDto studentDto){
         logger.info("Updating a student");
+        if (!studentRepository.existsById(id)){
+            return null;
+        }
         Student student = modelMapper.map(studentDto, Student.class);
         student.setStudentId(id);
         student = studentRepository.save(student);
@@ -59,11 +56,14 @@ public class StudentService {
         return modelMapper.map(student, StudentDto.class);
     }
 
-    public void delete(Long id){
+    public boolean delete(Long id){
         logger.info("Deleting a student");
         Optional<Student> student = studentRepository.findById(id);
-
-        student.ifPresent(value -> studentRepository.delete(value));
+        if (student.isPresent()){
+            studentRepository.delete(student.get());
+            return true;
+        }
+        return false;
     }
 
 }
