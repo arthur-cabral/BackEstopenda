@@ -188,3 +188,6 @@ target
 .gradle
 README.html
 .exercism
+
+### Environment variables
+env.yml
