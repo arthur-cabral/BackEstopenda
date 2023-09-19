@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/api/event")
 @Tag(name = "Event")
 public class EventController {
 

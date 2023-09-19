@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api/student")
 @Tag(name = "Student")
 public class StudentController {
 
